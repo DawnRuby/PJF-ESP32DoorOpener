@@ -1,0 +1,554 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Iot.Device.DhcpServer</name>
+    </assembly>
+    <members>
+        <member name="T:Iot.Device.DhcpServer.DhcpServer">
+            <summary>
+            A DHCP Server class.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpServer.CaptivePortalUrl">
+            <summary>
+            Gets or sets the captive portal URL. If null or empty, this will be ignored.
+            </summary>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpServer.Start(System.Net.IPAddress,System.Net.IPAddress,System.UInt16)">
+            <summary>
+            Starts the DHCP Server to start listning.
+            </summary>
+            <returns>Returns false in case of error.</returns>
+            <param name="address">The server IP address.</param>
+            <param name="mask">The mask used for distributing the IP addess.</param>
+            <param name="timeToLeave">Default time to leave for bail expiration.</param>
+            <exception cref="T:System.Net.Sockets.SocketException">Socket exception occurred.</exception>
+            <exception cref="T:System.Exception">An exception occured while setting up the DHCP listner or sender.</exception>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpServer.Stop">
+            <summary>
+            Stops the listening.
+            </summary>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpServer.Dispose">
+            <inheritdoc/>
+        </member>
+        <member name="T:Iot.Device.DhcpServer.DhcpMessage">
+            <summary>
+            DHCP Message class.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.OperationCode">
+            <summary>
+            Gets or sets the operation Code.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.HardwareType">
+            <summary>
+            Gets or setsthe hardware type.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.HardwareAddressLength">
+            <summary>
+            Gets or sets the hardware address lenght.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.Hops">
+            <summary>
+            Gets or sets the hops.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.TransactionId">
+            <summary>
+            Gets or sets the transaction ID.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.SecondsElapsed">
+            <summary>
+            Gets or sets the seconds elapsed.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.Flags">
+            <summary>
+            Gets or sets the Flags.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.ClientIPAddress">
+            <summary>
+            Gets or sets the client IP addres.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.YourIPAddress">
+            <summary>
+            Gets or sets your server IP address.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.ServerIPAddress">
+            <summary>
+            Gets or sets the server IP address.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.GatewayIPAddress">
+            <summary>
+            Gets or sets the gateway IP address.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.ClientHardwareAddress">
+            <summary>
+            Gets or sets the client hardware address.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.Cookie">
+            <summary>
+            Gets or sets the magic cookie.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.Options">
+            <summary>
+            Gets or sets the options.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.DhcpMessageType">
+            <summary>
+            Gets the message type.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.HostName">
+            <summary>
+            Gets the host name.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.RequestedIpAddress">
+            <summary>
+            Gets the request IP aAddress.
+            </summary>
+        </member>
+        <member name="P:Iot.Device.DhcpServer.DhcpMessage.DhcpAddress">
+            <summary>
+            Gets the DHCP addres.
+            </summary>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpMessage.Parse(System.Byte[]@)">
+            <summary>
+            Parses the message.
+            </summary>
+            <param name="dhcppacket">The byte array message.</param>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpMessage.Build">
+            <summary>
+            Build a message.
+            </summary>
+            <returns>The message as a byte array.</returns>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpMessage.Offer(System.Net.IPAddress,System.Net.IPAddress,System.Net.IPAddress,System.Byte[])">
+            <summary>
+            Offer message.
+            </summary>
+            <param name="cip">Client IP addres..</param>
+            <param name="mask">Network mask.</param>
+            <param name="sip">Server IP address.</param>
+            <param name="additionalOptions">Additional options to send.</param>
+            <returns>A byte arry with the message.</returns>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpMessage.Acknoledge(System.Net.IPAddress,System.Net.IPAddress,System.Net.IPAddress,System.Byte[])">
+            <summary>
+            Ackanoledge message.
+            </summary>
+            <param name="cip">Client IP addres..</param>
+            <param name="mask">Network mask.</param>
+            <param name="sip">Server IP address.</param>
+            <param name="additionalOptions">Additional options to send.</param>
+            <returns>A byte arry with the message.</returns>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpMessage.NotAcknoledge">
+            <summary>
+            Not Ackanoledge message.
+            </summary>
+            <returns>A byte arry with the message.</returns>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpMessage.Decline(System.Net.IPAddress,System.Net.IPAddress,System.Net.IPAddress)">
+            <summary>
+            Not Ackanoledge message.
+            </summary>
+            <param name="cip">Client IP addres..</param>
+            <param name="mask">Network mask.</param>
+            <param name="sip">Server IP address.</param>
+            <returns>A byte arry with the message.</returns>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpMessage.ResetOptions">
+            <summary>
+            Resets the options.
+            </summary>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpMessage.AddOptionRaw(System.Byte[]@)">
+            <summary>
+            Add an option. This will just add the option to the option list, you are responsible to use the proper code and encoding.
+            </summary>
+            <param name="optdata">The options to add.</param>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpMessage.AddOption(Iot.Device.DhcpServer.Enums.DhcpOptionCode,System.Byte[])">
+            <summary>
+            Add an option to the options.
+            </summary>
+            <param name="optType">The option code.</param>
+            <param name="optData">The option data.</param>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpMessage.OptionsContainsKey(Iot.Device.DhcpServer.Enums.DhcpOptionCode)">
+            <summary>
+            Checks if the option contains a specific key.
+            </summary>
+            <param name="lookOpt">The option to check.</param>
+            <returns>True if found.</returns>
+        </member>
+        <member name="M:Iot.Device.DhcpServer.DhcpMessage.GetOption(Iot.Device.DhcpServer.Enums.DhcpOptionCode)">
+            <summary>
+            Gets the option contained in a key.
+            </summary>
+            <param name="lookOpt">The option to check.</param>
+            <returns>The byte array with the raw option value.</returns>
+        </member>
+        <member name="T:Iot.Device.DhcpServer.Enums.DhcpMessageType">
+            <summary>
+            The type of DHCP Messages.
+            </summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.Unknown">
+            <summary>Unknown.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.Discover">
+            <summary>Discover.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.Offer">
+            <summary>Offer.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.Request">
+            <summary>Request.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.Decline">
+            <summary>Decline.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.Ack">
+            <summary>Acknoledged.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.Nak">
+            <summary>Not akcknoledged.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.Release">
+            <summary>Release.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.Inform">
+            <summary>Inform.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.ForceRenew">
+            <summary>Force renew.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.LeaseQuery">
+            <summary>Lease query.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.LeaseUnassigned">
+            <summary>Lease unassigned.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.LeaseUnknown">
+            <summary>Lease unknown.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpMessageType.LeaseActive">
+            <summary>Lease active.</summary>
+        </member>
+        <member name="T:Iot.Device.DhcpServer.Enums.DhcpOperation">
+            <summary>
+            DHCP Operation.
+            </summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOperation.BootRequest">
+            <summary>Boot request.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOperation.BootReply">
+            <summary>Boot reply.</summary>
+        </member>
+        <member name="T:Iot.Device.DhcpServer.Enums.DhcpOptionCode">
+            <summary>
+            DHCP option code. See https://www.ibm.com/docs/en/i/7.2?topic=concepts-dhcp-options-lookup for a comprehensive definition of each of them.
+            Also present in https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol.
+            This enumeration is not complete and more options are available.
+            </summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.Pad">
+            <summary>Pad.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.SubnetMask">
+            <summary>Subnet mask.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.TimeOffset">
+            <summary>Time offset.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.Router">
+            <summary>Router.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.TimeServer">
+            <summary>Time server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NameServer">
+            <summary>Name server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.DomainNameServer">
+            <summary>Domain name server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.LogServer">
+            <summary>Log server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.CookieServer">
+            <summary>Cookie server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.LinePrinterServer">
+            <summary>Line printer server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.ImpressServer">
+            <summary>Impress server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.ResourceLocationServer">
+            <summary>Resource location server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.Hostname">
+            <summary>Hostname.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.BootFileSize">
+            <summary>Boot file size.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.MeritDumpFile">
+            <summary>Merit dump file.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.DomainNameSuffix">
+            <summary>Domain name suffix.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.WrapServer">
+            <summary>Swap server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.RootPath">
+            <summary>Root path.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.ExtensionsPath">
+            <summary>Extensions path.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.IpForwarding">
+            <summary>IP forwarding.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NonLocalSourceRouting">
+            <summary>Non-Local source routing.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.PolicyFilter">
+            <summary>Policy filter.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.MaximumDatagramReassemblySize">
+            <summary>Maximum datagram reassembly size.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.DefaultIpTimeToLive">
+            <summary>Default IP time to live.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.PathMtuAgingTimeout">
+            <summary>Path MTU aging timeout.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.PathMtuPlateauTable">
+            <summary>Path MTU plateau table.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.InterfaceMtu">
+            <summary>Interface MTU.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.AllSubnetsAreLocal">
+            <summary>All subnets are local.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.BroadcastAddress">
+            <summary>Broadcast address.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.PerformMaskDiscovery">
+            <summary>Perform mask discovery.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.MaskSupplier">
+            <summary>Mask supplier.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.PerformRouterDiscovery">
+            <summary>Perform router discovery.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.RouteurSolicitationAddressOption">
+            <summary>Router solicitation address option.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.StaticRoute">
+            <summary>Static route.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.TailerEncapsulation">
+            <summary>Trailer encapsulation.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.ArpCacheTimeout">
+            <summary>ARP cache timeout.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.EthernetEncapsulation">
+            <summary>Ethernet encapsulation.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.TcpDefaultTtl">
+            <summary>TCP default TTL.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.TcpKeepAliveInterval">
+            <summary>TCP keep-alive interval.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.TcpKeppAliveGarbage">
+            <summary>TCP keep-alive garbage.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NetworkInformationServiceDomain">
+            <summary>Network information service domain.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NetworkInformationServers">
+            <summary>Network information servers.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NetworkTimeProtocolServersOption">
+            <summary>Network time protocol servers option.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NetBiosTcpNameServer">
+            <summary>NetBIOS over TCP/IP name server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NetBiosTcpDatagramDistributionServer">
+            <summary>NetBIOS over TCP/IP datagram distribution server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NetBiosTcpNodeType">
+            <summary>NetBIOS over TCP/IP node type.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NetBiosTcpScope">
+            <summary>NetBIOS over TCP/IP scope.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.XWindowSystemFontServer">
+            <summary>X Window System Font server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.XWindowSystemDisplayManager">
+            <summary>X Window System display manager.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.RequestedIpAddress">
+            <summary>Requested IP Address.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.AddressTime">
+            <summary>IP address lease time.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.DhcpMessageType">
+            <summary>DHCP message type.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.DhcpAddress">
+            <summary>DHCP address.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.ParameterList">
+            <summary>Parameter list.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.DhcpMessage">
+            <summary>DHCP Message.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.DhcpMaxMessageSize">
+            <summary>DHCP maximum message size.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.RenewalT1">
+            <summary>Renewal (T1) time value.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.RebindingT2">
+            <summary>Rebinding (T2) time value.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.ClassId">
+            <summary>Class ID.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.ClientId">
+            <summary>Client ID.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NetWareIpDomainName">
+            <summary>NetWare/IP domain name.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NetWareIp">
+            <summary>NetWare/IP.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NisDomainName">
+            <summary>NIS domain name.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NisServer">
+            <summary>NIS servers.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.ServerName">
+            <summary>Server name.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.BootFileName">
+            <summary>Boot file name.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.HomeAddress">
+            <summary>Home address.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.SmtpServers">
+            <summary>SMTP servers.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.Pop3Server">
+            <summary>POP3 server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NntpServer">
+            <summary>NNTP server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.WwwServer">
+            <summary>WWW Server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.FingerServer">
+            <summary>Finger server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.IrcServer">
+            <summary>IRC server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.StreetTalkServer">
+            <summary>StreetTalk server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.StdaServer">
+            <summary>STDA server.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.UserClass">
+            <summary>User class.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.DirectoryAgent">
+            <summary>Directory agent.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.ServiceScope">
+            <summary>Service scope.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.NamingAuthority">
+            <summary>Naming authority.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.AutoConfig">
+            <summary>Auto config.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.CaptivePortal">
+            <summary>Captive portal. See RFC8910.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.DhcpOptionCode.End">
+            <summary>End.</summary>
+        </member>
+        <member name="T:Iot.Device.DhcpServer.Enums.HardwareType">
+            <summary>
+            Hardware type.
+            </summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.HardwareType.Ethernet">
+            <summary>Ethernet.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.HardwareType.ExperimentalEthernet">
+            <summary>Experimental ethernet.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.HardwareType.AmateurRadio">
+            <summary>Amateur radio.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.HardwareType.ProteonTokenRing">
+            <summary>Proteon token ring.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.HardwareType.Chaos">
+            <summary>Chaos.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.HardwareType.IEEE802Networks">
+            <summary>IEEE802 networks.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.HardwareType.ArcNet">
+            <summary>ARC Net.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.HardwareType.HyperChannel">
+            <summary>Hyper channel.</summary>
+        </member>
+        <member name="F:Iot.Device.DhcpServer.Enums.HardwareType.Lanstar">
+            <summary>Lanstar.</summary>
+        </member>
+    </members>
+</doc>
