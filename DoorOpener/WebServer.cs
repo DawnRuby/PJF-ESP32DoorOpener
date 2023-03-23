@@ -79,13 +79,11 @@ namespace DoorOpener
                     else
                     {
                         response.ContentType = "text/html";
-                        var networks = GetAvailableNetworks();
                         Thread.Sleep(5000);
 
                         //Add the header to the website
                         var websitehtml = Resources.GetString(Resources.StringResources.main_head);
 
-                        websitehtml += CreateWifiEntryList(networks);
 
                         //Add the submit form to allow "posting" the updated wifi password
                         websitehtml += Resources.GetString(Resources.StringResources.submit_form);
@@ -172,53 +170,6 @@ namespace DoorOpener
             }
 
             return hash;
-        }
-
-        /// <summary>
-        /// Gets a list of avaialble networks
-        /// </summary>
-        /// <returns></returns>
-        static WifiNetworkReport GetAvailableNetworks()
-        {
-            var report = WifiAdapter.FindAllAdapters()[0];
-            report.AvailableNetworksChanged += hasNewNetwork();
-            return report.NetworkReport;
-        }
-
-        private static AvailableNetworksChangedEventHandler hasNewNetwork()
-        {
-            Debug.WriteLine($"AAAAAA");
-            return null;
-        }
-
-        static string CreateWifiEntryList(WifiNetworkReport networkReport)
-        {
-            var html = 
-                "<table id=\"ssidSelection\">" +
-                "   <tr>" +
-                "       <td>Use?</>" +
-                "       <td>Signal</td>" +
-                "       <td>Name</td>" +
-                "       <td>Kind</td>" +
-                "   </tr>";
-
-            for (int i = 0; i < networkReport.AvailableNetworks.Length; i++)
-            {
-                WifiAvailableNetwork item = networkReport.AvailableNetworks[i];
-                var signal = item.SignalBars;
-                var ssid = item.Bsid;
-                var networkKind = item.NetworkKind;
-                html += 
-                "   <tr>" +
-                $"       <td><input type=\"checkbox\" id=\"ssidCheckBox{i}\" tag onclick=\"setSsid({i})\"></td>" +
-                $"       <td>{signal}</td>" +
-                $"       <td id=ssidName{i}>{ssid}</td>" +
-                $"       <td>{networkKind}</td>" +
-                "   </tr>";
-            }
-
-            html += "</table>";
-            return html;
         }
 
 

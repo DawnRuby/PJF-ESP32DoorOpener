@@ -48,11 +48,10 @@ namespace DoorOpener
             // AutoStart - Start Soft AP when system boots.
             // HiddenSSID- Hide the SSID
             //
-            wapconf.Options = WirelessAPConfiguration.ConfigurationOptions.AutoStart |
-                            WirelessAPConfiguration.ConfigurationOptions.Enable;
+            wapconf.Options = WirelessAPConfiguration.ConfigurationOptions.AutoStart;
 
             // Set the SSID for Access Point. If not set will use default  "nano_xxxxxx"
-            //wapconf.Ssid = "MySsid";
+            wapconf.Ssid = "Door Opener";
 
             // Maximum number of simultaneous connections, reserves memory for connections
             wapconf.MaxConnections = 1;

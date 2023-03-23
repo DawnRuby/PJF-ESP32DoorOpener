@@ -14,56 +14,36 @@ namespace DoorOpener
 {
     public class Program
     {
-        private static WebServer server = new WebServer();
-        private static GpioController sGpioController;
-        private static GpioController sUiGpioController;
-        static readonly ThreadStart uiControlThreadStart = new(() => UiMain());
-        static readonly Thread uiControlThread = new(uiControlThreadStart);
+        private static readonly WebServer Server = new WebServer();
+        private static GpioController _sGpioController;
+        private static GpioController _sUiGpioController;
+        static readonly ThreadStart UiControlThreadStart = new(() => UiMain());
+        static readonly Thread UiControlThread = new(UiControlThreadStart);
 
-        
-
-        private static bool IsConnected = false;
+        private static bool _isConnected = false;
 
         //General Configuration options for our relays and other things
-        const int setupPin = 4;
-        const int sleepTimeMinutes = 60000;
-        const int relayPin = 13;
-        const int ledPin = 2;
+        const int SetupPin = 4;
 
 
         public static void Main()
         {
             Debug.WriteLine("Door opening system is booting... please wait!");
-            sGpioController = new GpioController();
-            Thread.Sleep(10_000);
+            _sGpioController = new GpioController();
 
             Debug.WriteLine("Starting Ui Thread...");
-            uiControlThread.Start();
+            UiControlThread.Start();
             InitWifi();
 
             // Sleep this thread indefinetly waiting for now.
             Thread.Sleep(Timeout.Infinite);
         }
 
-        private static void RefreshNetworks(object obj)
-        {
-            if (obj is WifiAdapter adapter)
-            {
-                Debug.WriteLine("starting Wi-Fi scan");
-                adapter.ScanAsync();
-            }
-        }
 
         public static void UiMain()
         {
-            //Wifi timer which looks for new wifi networks and saves them in a public list
-            WifiAdapter wifi = WifiAdapter.FindAllAdapters()[0];
-            var aTimer = new Timer(RefreshNetworks, wifi, 30000, 30000);
-            wifi.AvailableNetworksChanged += Wifi_AvailableNetworksChanged;
-
-
-            sUiGpioController = new GpioController();
-            var led = sUiGpioController.OpenPin(2, PinMode.Output);
+            _sUiGpioController = new GpioController();
+            var led = _sUiGpioController.OpenPin(2, PinMode.Output);
             led.Write(PinValue.Low);
 
             do
@@ -74,7 +54,7 @@ namespace DoorOpener
 
         public static void WifiLightStatus(GpioPin led)
         {
-            if (!Wireless80211.IsEnabled() || !IsConnected)
+            if (!Wireless80211.IsEnabled() || !_isConnected)
             {
                 led.Toggle();
                 Thread.Sleep(125);
@@ -97,7 +77,7 @@ namespace DoorOpener
         {
             Debug.WriteLine("Program Started, attempting to connect to Wifi");
 
-            GpioPin setupButton = sGpioController.OpenPin(setupPin, PinMode.InputPullUp);
+            GpioPin setupButton = _sGpioController.OpenPin(SetupPin, PinMode.InputPullUp);
             if (!Wireless80211.IsEnabled() || (setupButton.Read() == PinValue.High))
             {
                 Wireless80211.Disable();
@@ -125,7 +105,7 @@ namespace DoorOpener
                 Debug.WriteLine($"AP access IP Address is: {WirelessAP.GetIP()}");
 
 
-                server.Start();
+                Server.Start();
 
                 return false;
             }
@@ -149,7 +129,7 @@ namespace DoorOpener
                     if (connected)
                     {
                         Debug.WriteLine("Connection could be established");
-                        IsConnected = true;
+                        _isConnected = true;
                         return true;
                     }
                     else
@@ -177,27 +157,6 @@ namespace DoorOpener
 
 
             return false;
-        }
-
-
-        /// <summary>
-        /// Event handler for when Wifi scan completes
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void Wifi_AvailableNetworksChanged(WifiAdapter sender, object e)
-        {
-            Debug.WriteLine("Wifi_AvailableNetworksChanged - get report");
-
-            // Get Report of all scanned Wifi networks
-            WifiNetworkReport report = sender.NetworkReport;
-
-            // Enumerate though networks looking for our network
-            foreach (WifiAvailableNetwork net in report.AvailableNetworks)
-            {
-                // Show all networks found
-                Debug.WriteLine($"Found Network. Net SSID :{net.Ssid},  BSSID : {net.Bsid},  rssi : {net.NetworkRssiInDecibelMilliwatts.ToString()},  signal : {net.SignalBars.ToString()}");
-            }
         }
     }
 }
